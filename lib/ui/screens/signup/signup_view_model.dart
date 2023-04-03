@@ -2,7 +2,7 @@ import 'package:baseproject/app/routes/setup_routes.router.dart';
 import 'package:baseproject/base/custom_base_view_model.dart';
 import 'package:baseproject/models/app_models/api_error_model.dart';
 import 'package:baseproject/models/user/user_create_model.dart';
-import 'package:baseproject/utils/api_utils/api_result/api_result.dart';
+import 'package:baseproject/utils/results/api_result/api_result.dart';
 
 import '../../../../../const/enums/login_method_enum.dart';
 
@@ -35,14 +35,14 @@ class SignUpViewModel extends CustomBaseViewModel {
           firebaseTokenId: firebaseTokenId,
           email: enteredEmail,
           accountCreationMethod: loginMethodEnum.email.name,
-          firebaseNotificationTokenId: notificationToken
-      );
+          firebaseNotificationTokenId: notificationToken);
 
       ApiResult<bool> createUserResult =
-      await getDataManager().createUser(_userCreateModel);
+          await getUserApiService().createUser(_userCreateModel);
 
       createUserResult.when(success: (bool result) async {
-        bool result = await getDataManager().saveUserModel(_userCreateModel);
+        bool result =
+            await getSharedPreferenceService().saveUserModel(_userCreateModel);
         if (result) {
           await getAnalyticsService().logSignUpEvent(loginMethodEnum.email);
           stopProgressBar();

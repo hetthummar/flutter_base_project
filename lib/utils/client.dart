@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:baseproject/app/locator.dart';
 import 'package:baseproject/config/api_config.dart';
 import 'package:baseproject/services/firebase_auth_service.dart';
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class Client {
@@ -12,8 +11,8 @@ class Client {
 
   Dio? _dio;
   BaseOptions options = BaseOptions(
-    connectTimeout: 1000 * 15,
-    receiveTimeout: 1000 * 15,
+    connectTimeout: const Duration(seconds: 60),
+    receiveTimeout: const Duration(seconds: 60),
   );
 
   Map<String, Object>? header;
@@ -22,12 +21,13 @@ class Client {
 
   Client setUrlEncoded() {
     header!.remove('Content-Type');
-    header!.putIfAbsent('Content-Type', () => 'application/x-www-form-urlencoded');
+    header!
+        .putIfAbsent('Content-Type', () => 'application/x-www-form-urlencoded');
     _dio!.options.headers = header;
     return this;
   }
 
-  setHeaders(){
+  setHeaders() {
     _dio!.options.headers = header;
     return this;
   }
@@ -35,9 +35,9 @@ class Client {
   Future<Client> setProtectedApiHeader() async {
     FirebaseAuthService _firebaseAuthService = locator<FirebaseAuthService>();
     // String? token = await _firebaseAuthService.getUserid();
-    String? idToken = await _firebaseAuthService.getIdToken();
+    // String? idToken = await _firebaseAuthService.getIdToken();
     String? userId = await _firebaseAuthService.getUserid();
-    header!.putIfAbsent('authorization', () => 'Bearer $idToken');
+    // header!.putIfAbsent('authorization', () => 'Bearer $idToken');
     header!.putIfAbsent('user_id', () => userId!);
     return this;
   }
@@ -49,7 +49,11 @@ class Client {
     header!.putIfAbsent('api_key', () => ApiConfig.apiKey);
     _dio = Dio(options);
     _dio!.interceptors.add(dioInterceptor);
-    _dio!.interceptors.add(PrettyDioLogger(requestBody: true, requestHeader:true,responseHeader: true,compact:false));
+    _dio!.interceptors.add(PrettyDioLogger(
+        requestBody: true,
+        requestHeader: true,
+        responseHeader: true,
+        compact: false));
     _dio!.options.baseUrl = baseUrl;
     _dio!.options.headers = header;
     return this;
@@ -57,14 +61,12 @@ class Client {
 
   Dio build() {
     _dio!.options.headers = header;
-    (_dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    (_dio!.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
         (HttpClient client) {
-          client.badCertificateCallback =
+      client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
       return client;
     };
-    print("HET 99 100 :- " + header.toString());
-
     return _dio!;
   }
 }
@@ -74,7 +76,6 @@ class Client {
 
 InterceptorsWrapper dioInterceptor = InterceptorsWrapper(
   onRequest: (options, handler) {
-
     // print("options :- " + options.headers.toString());
     // if (options.method == 'GET') {
     //   if (options.queryParameters.isNotEmpty) {
@@ -90,7 +91,7 @@ InterceptorsWrapper dioInterceptor = InterceptorsWrapper(
     return handler.next(response); // continue
   },
   onError: (DioError e, handler) async {
-    Response? _response = e.response;
+    Response? response = e.response;
     // if (_response != null) {
     //   int? statusCode = _response.statusCode;
     //

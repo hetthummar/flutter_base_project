@@ -1,16 +1,15 @@
+import 'package:baseproject/main.dart';
 import 'package:flutter/material.dart';
 
-import 'color_config.dart';
-
-class ThemeConfig{
-
+class ThemeConfig {
   ThemeData themeData = ThemeData(
-    colorScheme: const ColorScheme.light().copyWith(
-        primary: ColorConfig.primaryColor,
-        secondary: ColorConfig.secondaryColor
+    colorScheme: $styles.colors.toColorScheme(),
+    appBarTheme: AppBarTheme(
+      color: $styles.colors.white,
+      elevation: 0,
+      titleTextStyle: $styles.text.h2.copyWith(color: $styles.colors.primary),
     ),
     dividerColor: Colors.black26,
     fontFamily: 'Poppins',
   );
-
 }

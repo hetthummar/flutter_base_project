@@ -7,8 +7,8 @@ class FacebookLoginModel {
 
   FacebookLoginModel(
       {required this.displayName,
-        required this.email,
-        required this.facebookLoginId,
-        required this.firebaseId,
-        required this.photoUrl});
+      required this.email,
+      required this.facebookLoginId,
+      required this.firebaseId,
+      required this.photoUrl});
 }

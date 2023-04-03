@@ -7,8 +7,8 @@ class AppleLoginModel {
 
   AppleLoginModel(
       {required this.displayName,
-        required this.email,
-        required this.appleLoginId,
-        required this.firebaseId,
-        required this.photoUrl});
+      required this.email,
+      required this.appleLoginId,
+      required this.firebaseId,
+      required this.photoUrl});
 }

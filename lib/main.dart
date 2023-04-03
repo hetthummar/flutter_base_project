@@ -1,24 +1,25 @@
 import 'dart:async';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:baseproject/app/app.bottomsheets.dart';
+import 'package:baseproject/app/app.dialog.dart';
+import 'package:baseproject/app/app.snackbar.dart';
 import 'package:baseproject/app/routes/setup_routes.router.dart';
-import 'package:baseproject/app/setup_snackbar.dart';
 import 'package:baseproject/const/app_const.dart';
 import 'package:baseproject/services/firebase_notification_service.dart';
+import 'package:baseproject/styles/styles.dart';
 import 'package:baseproject/utils/app_util.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:sized_context/sized_context.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 import 'app/locator.dart';
-import 'app/setup_bottom_sheet.dart';
-import 'app/setup_dilog.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'config/color_config.dart';
 import 'config/theme_config.dart';
 import 'services/firebase_analytics_service.dart';
 
@@ -26,7 +27,8 @@ void main() {
   print("App Started ");
 
   runZonedGuarded(() {
-    WidgetsFlutterBinding.ensureInitialized();
+    WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
         .then((_) async {
@@ -58,12 +60,14 @@ void main() {
       setupSnackBarUi();
       setUpBototmSheet();
       setupDialogUi();
-      print("HIHI 9");
 
-      FirebaseNotificationService _notificationService =
+      FirebaseNotificationService notificationService =
           locator<FirebaseNotificationService>();
-      _notificationService.initMessaging();
+      notificationService.initMessaging();
 
+      FlutterNativeSplash.remove();
+
+      print("Running APP");
       runApp(const MyApp());
     });
   }, (error, trace) async {
@@ -72,42 +76,48 @@ void main() {
   });
 }
 
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  if (message.data != null && message.data.keys.isNotEmpty) {
-    await showNotification(
-      message.data['title'],
-      message.data['body'],
-      message.data['type'],
-      image: message.data['type'],
-      id: message.data['id'],
-    );
-  }
-}
+// Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   if (message.data != null && message.data.keys.isNotEmpty) {
+//     await showNotification(
+//       message.data['title'],
+//       message.data['body'],
+//       message.data['type'],
+//       image: message.data['type'],
+//       id: message.data['id'],
+//     );
+//   }
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  static AppStyle _style = AppStyle();
+  static AppStyle get style => _style;
+
   @override
   Widget build(BuildContext context) {
-    print("App Started - Main View Building");
+    print("Main View Building");
 
     AppUtils().easyLoadingInit();
 
-    return ScreenUtilInit(
-      designSize: const Size(360, 800),
-      builder: (child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Test App',
-          navigatorKey: StackedService.navigatorKey,
-          onGenerateRoute: StackedRouter().onGenerateRoute,
-          initialRoute: "/",
-          navigatorObservers: [
-            locator<FirebaseAnalyticsService>().getAnalyticsObserver(),
-          ],
-          theme: ThemeConfig().themeData,
-        );
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: AppConst.appName,
+      navigatorKey: StackedService.navigatorKey,
+      builder: EasyLoading.init(
+        builder: (context, child) {
+          _style = AppStyle(screenSize: context.sizePx);
+          return child!;
+        },
+      ),
+      onGenerateRoute: StackedRouter().onGenerateRoute,
+      initialRoute: "/",
+      navigatorObservers: [
+        locator<FirebaseAnalyticsService>().getAnalyticsObserver(),
+      ],
+      theme: ThemeConfig().themeData,
     );
   }
 }
+
+AppStyle get $styles => MyApp.style;

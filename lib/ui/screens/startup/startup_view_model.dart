@@ -5,10 +5,10 @@ import 'package:baseproject/models/user/user_create_model.dart';
 class StartUpViewModel extends CustomBaseViewModel {
   runStartupLogic() async {
     bool isLoggedIn = await getAuthService().isUserLoggedIn();
-    UserCreateModel? _userBasicDataOfflineModel =
-        await getDataManager().getUserModel();
+    UserCreateModel? userBasicDataOfflineModel =
+        await getSharedPreferenceService().getUserModel();
 
-    if (isLoggedIn && _userBasicDataOfflineModel != null) {
+    if (isLoggedIn && userBasicDataOfflineModel != null) {
       getNavigationService().clearStackAndShow(Routes.mainScreenView);
     } else {
       await getAuthService().logOut();

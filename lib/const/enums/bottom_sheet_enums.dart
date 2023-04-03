@@ -1,1 +1,1 @@
-enum bottomSheetEnum { basic, error, noInternet,editProfile }
+enum bottomSheetEnum { basic, error, noInternet, editProfile }

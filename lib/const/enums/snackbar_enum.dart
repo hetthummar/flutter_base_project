@@ -1,1 +1,6 @@
-enum snackBarEnum {simpleSnackBar,successSnackBar,errorSnackBar,warningSnackBar}
+enum snackBarEnum {
+  simpleSnackBar,
+  successSnackBar,
+  errorSnackBar,
+  warningSnackBar
+}

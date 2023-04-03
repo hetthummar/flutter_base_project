@@ -1,6 +1,1 @@
-
-
-class ModelConverters {
-
-
-}
+class ModelConverters {}

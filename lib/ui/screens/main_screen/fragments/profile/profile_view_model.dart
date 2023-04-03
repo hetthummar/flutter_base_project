@@ -7,12 +7,11 @@ class ProfileViewModel extends CustomBaseViewModel {
   String? userName;
 
   getUserData() async {
-    UserCreateModel? _userBasicDataOfflineModel =
-        await getDataManager().getUserModel();
-    if (_userBasicDataOfflineModel != null) {
-      userName = _userBasicDataOfflineModel.name;
+    UserCreateModel? userBasicDataOfflineModel =
+        await getSharedPreferenceService().getUserModel();
+    if (userBasicDataOfflineModel != null) {
+      userName = userBasicDataOfflineModel.name;
       notifyListeners();
     }
   }
-
 }

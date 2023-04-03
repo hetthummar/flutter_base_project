@@ -16,10 +16,10 @@ class IdModel {
   String id;
 
   factory IdModel.fromJson(Map<String, dynamic> json) => IdModel(
-    id: json["_id"],
-  );
+        id: json["_id"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
-  };
+        "_id": id,
+      };
 }

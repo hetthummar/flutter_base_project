@@ -24,6 +24,4 @@ class ColorConfig {
   static const Color greenColor2 = Color(0xff27AE60);
   static const Color blueShadow = Color(0xffE5E5F5);
   static const Color textFieldBackground = Color(0xffEBEBEB);
-
-
 }

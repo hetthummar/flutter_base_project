@@ -37,7 +37,6 @@ void setupSnackBarUi() {
         instantInit: true),
   );
 
-
   service.registerCustomSnackbarConfig(
     variant: snackBarEnum.warningSnackBar,
     config: SnackbarConfig(
@@ -47,5 +46,4 @@ void setupSnackBarUi() {
         snackStyle: SnackStyle.FLOATING,
         instantInit: true),
   );
-
 }

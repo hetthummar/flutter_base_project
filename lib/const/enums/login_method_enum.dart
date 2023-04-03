@@ -1,6 +1,1 @@
-enum loginMethodEnum{
-  email,
-  google,
-  facebook,
-  apple
-}
+enum loginMethodEnum { email, google, facebook, apple }

@@ -5,7 +5,7 @@ class FormatQueryParameter {
     queryParameters.forEach((String k, dynamic v) {
       String? newValue = v;
       if (newValue != null) {
-          newValue = v.replaceAll(" ", "%20");
+        newValue = v.replaceAll(" ", "%20");
       }
       returnMap.putIfAbsent(k, () => newValue);
     });

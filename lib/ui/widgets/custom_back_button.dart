@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomBackButton extends StatelessWidget {
-
   Function callback;
   CustomBackButton(this.callback);
 

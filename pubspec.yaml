@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -26,12 +26,13 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+
 dependencies:
-  flutter:
+  flutter_test:
     sdk: flutter
 
   #widgets ---------------------------------------------
-  intl_phone_number_input: ^0.7.0+2
+  intl_phone_number_input: ^0.7.3+1
   pin_code_fields: ^7.2.0
   shimmer: ^2.0.0
   flutter_easyloading: ^3.0.0
@@ -42,92 +43,137 @@ dependencies:
   font_awesome_flutter: ^9.0.0
   passwordfield: ^0.1.0
   flutter_platform_widgets: ^1.20.0
+  flutter_switch: ^0.3.2
+  dropdown_button2: ^1.9.2
+  flutter_staggered_grid_view: ^0.6.2
 
   #storage and apis ---------------------------------------------
 
   shared_preferences: ^2.0.15
   flutter_dotenv: ^5.0.0
-  dio: ^4.0.0
+  dio: ^5.0.0
   moor_flutter: ^4.0.0
   moor_db_viewer: ^4.0.0
 
 
   #helpers ---------------------------------------------
-  get_it: ^7.1.0
+  get_it: ^7.2.0
   double_back_to_close_app: ^2.1.0
-  path_provider: ^2.0.10
-  permission_handler: ^9.2.0
+  path_provider: ^2.0.12
+  permission_handler: ^10.2.0
   awesome_notifications: ^0.0.6+9
-  infinite_scroll_pagination: ^3.1.0
+  infinite_scroll_pagination: ^3.2.0
   timeago: ^3.2.2
-  provider: ^5.0.0
+  provider: ^6.0.5
   image_picker: ^0.8.4+4
-  image_cropper: ^1.4.0
-  flutter_image_compress: ^1.1.0
-  email_validator: 2.0.1
+  multi_image_picker: ^4.8.01
+  image_cropper: ^3.0.1
+  email_validator: 2.1.17
+  pull_to_refresh: ^2.0.0
+  image_size_getter: ^2.1.2
 
   #  device_preview: ^0.7.4
 
 
   #firebase ---------------------------------------------
-  firebase_messaging: 11.2.6
-  firebase_core: ^1.6.0
-  firebase_auth: ^3.3.13
-  firebase_crashlytics: ^2.0.0
-  #  firebase_dynamic_links: ^2.0.9
+  firebase_messaging: ^14.2.2
+  firebase_core: ^2.5.0
+  firebase_auth: ^4.2.9
+  firebase_crashlytics: ^3.0.12
+  firebase_dynamic_links: ^5.0.17
   #  firebase_in_app_messaging: ^0.5.0+10
   #  firebase_remote_config: ^0.11.0+1
-  firebase_performance: ^0.7.1+1
-  firebase_storage: ^10.2.11
-  firebase_analytics: ^9.1.4
+  firebase_performance: ^0.9.0+11
+  firebase_storage: ^11.0.11
+  firebase_analytics: ^10.1.1
 
 
   #filled-stack ---------------------------------------------
-  stacked: ^2.2.7
-  stacked_hooks: ^0.2.1
-  stacked_themes: ^0.3.6
-  stacked_services: ^0.8.16
+  stacked: ^3.2.0
+  stacked_services: ^1.0.0
+  stacked_hooks: ^0.2.3
+  stacked_themes: ^0.3.10
 
-  flutter_hooks: ^0.17.0
-  path: ^1.8.0
+  flutter_hooks: ^0.18.6
+  path: ^1.8.2
 
   #animations ---------------------------------------------
-  flutter_staggered_animations: ^1.0.0
-  animations: ^2.0.2
+  flutter_staggered_animations: ^1.1.1
+  animations: ^2.0.7
+  like_button: ^2.0.5
 
   country_pickers: ^2.0.0
   timer_count_down: ^2.2.0
-  lottie: ^1.1.0
-  objectid: ^2.0.0
-  cached_network_image: ^3.1.0
+  lottie: ^2.2.0
+  objectid: ^2.1.0
+  url_launcher: ^6.1.8
+  cached_network_image: ^3.2.3
 
   #authantication ---------------------------------------------
   google_sign_in: ^5.0.4
   flutter_facebook_auth: ^3.5.7
   sign_in_with_apple: ^3.3.0
-  flutter_screenutil: ^5.5.2
+#  flutter_screenutil: ^5.6.1
   the_apple_sign_in: ^1.1.1
+  flutter_animate: ^4.1.0
 
+  chat_bubbles: ^1.4.0
+  chatview: ^1.2.0+1
+  gallery_saver: ^2.3.2
+  flutter_launcher_icons: ^0.12.0
+  share_plus: ^6.3.1
+  action_slider: ^0.6.1
+  stripe_checkout: ^1.0.0
+  #  flutter_stripe: ^8.0.0+1
+  intl: ^0.18.0
+  json_annotation: ^4.6.0
+  webview_flutter: ^3.0.4
+  flutter_cache_manager: ^3.2.0
+
+  # new packages to try out
+  flutter_native_splash: ^2.2.19
+  gap: ^2.0.1
+  flutter_displaymode: ^0.5.0
+  flextras: ^1.0.0
+  simple_progress_indicators: ^0.2.0
+  socket_io_client: ^2.0.1
+  jumping_dot: ^0.0.4
+  equatable: ^2.0.5
+  enum_to_string: ^2.0.1
+  local_hero: ^0.2.0
+  light_compressor: ^2.0.1
+  flutter_native_image: ^0.0.6+1
+  clipboard: ^0.1.3
+  objectbox: ^2.0.0
+  linkable: ^3.0.1
+
+  zoom_pinch_overlay: ^1.4.1+3
+
+  flutter_scale_tap:
+    git:
+      url: https://github.com/rupinderjeet/flutter_scale_tap
+      ref: master
+  easy_debounce: ^2.0.3
+  sized_context: ^1.0.0+4
+
+dependency_overrides:
+  intl: ^0.18.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  pretty_dio_logger: ^1.1.1
-  build_runner: ^2.0.4
-  analyzer: ^2.1.0
-  stacked_generator: ^0.5.5
-  freezed: ^0.14.2
-  freezed_annotation: ^0.14.2
-  moor_generator: "4.6.0"
-  flutter_lints: ^1.0.0
+  pretty_dio_logger: ^1.3.1
+  build_runner: ^2.3.3
+  #  analyzer: ^5.5.0
+  stacked_generator: ^1.0.1
+  freezed: ^2.3.2
+  freezed_annotation: ^2.2.0
+  flutter_lints: ^2.0.1
+  dart_code_metrics: ^5.6.0
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

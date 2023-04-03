@@ -15,15 +15,13 @@ class ProfileView extends StatelessWidget {
       },
       // fireOnModelReadyOnce: true,
       initialiseSpecialViewModelsOnce: true,
-        disposeViewModel:false,
+      disposeViewModel: false,
       builder: (context, model, child) {
         return Scaffold(
-          backgroundColor: ColorConfig.lightGreyBackground,
-          body: const Center(child: Text("Profile View"))
-        );
+            backgroundColor: ColorConfig.lightGreyBackground,
+            body: const Center(child: Text("Profile View")));
       },
       viewModelBuilder: () => locator<ProfileViewModel>(),
     );
   }
 }
-

@@ -1,94 +1,92 @@
+import 'package:baseproject/app/locator.dart';
 import 'package:baseproject/app/routes/setup_routes.router.dart';
 import 'package:baseproject/base/custom_base_view_model.dart';
-import 'package:baseproject/base/custom_index_tracking_view_model.dart';
 import 'package:baseproject/models/app_models/api_error_model.dart';
 import 'package:baseproject/models/login_models/facebook_login_model.dart';
 import 'package:baseproject/models/login_models/google_login_model.dart';
 import 'package:baseproject/models/user/user_create_model.dart';
 import 'package:baseproject/services/firebase_analytics_service.dart';
-import 'package:baseproject/utils/api_utils/api_result/api_result.dart';
-import 'package:baseproject/utils/api_utils/boolean_result/boolean_result.dart';
+import 'package:baseproject/utils/results/api_result/api_result.dart';
+import 'package:baseproject/utils/results/boolean_result/boolean_result.dart';
+import 'package:stacked/stacked.dart';
 
 import '../../../const/enums/login_method_enum.dart';
 import '../../../models/login_models/apple_login_model.dart';
 
-class AuthViewModel extends CustomIndexTrackingViewModel {
+class AuthViewModel extends IndexTrackingViewModel {
+  
+  CustomBaseViewModel customBaseViewModel = locator<CustomBaseViewModel>();
+  
   gotoSignUpScreen() {
-    getCustomBaseViewModel()
+    customBaseViewModel
         .getNavigationService()
         .navigateTo(Routes.signUpView);
   }
 
   createAccountWithGoogle() async {
-    CustomBaseViewModel _customBaseViewModel = getCustomBaseViewModel();
-    _customBaseViewModel.showProgressBar();
+    customBaseViewModel.showProgressBar();
 
-    BooleanResult<GoogleLoginModel> _googleLoginModelResult =
-        await _customBaseViewModel.getAuthService().signInWithGoogle();
+    BooleanResult<GoogleLoginModel> googleLoginModelResult =
+        await customBaseViewModel.getAuthService().signInWithGoogle();
 
-    _googleLoginModelResult.when(success: (GoogleLoginModel googleLoginModel) {
+    googleLoginModelResult.when(success: (GoogleLoginModel googleLoginModel) {
       handleSocialLoginFlow(googleLoginModel: googleLoginModel);
-    }, failure: (String error) async{
-      await _customBaseViewModel.getAuthService().logOut();
-      await _customBaseViewModel.stopProgressBar();
+    }, failure: (String error) async {
+      await customBaseViewModel.getAuthService().logOut();
+      await customBaseViewModel.stopProgressBar();
     });
   }
 
   createAccountWithFacebook() async {
-    CustomBaseViewModel _customBaseViewModel = getCustomBaseViewModel();
-    _customBaseViewModel.showProgressBar();
+    customBaseViewModel.showProgressBar();
 
-    BooleanResult<FacebookLoginModel> _facebookLoginModel =
-        await _customBaseViewModel.getAuthService().signInWithFacebook();
+    BooleanResult<FacebookLoginModel> facebookLoginModel =
+        await customBaseViewModel.getAuthService().signInWithFacebook();
 
-    _facebookLoginModel.when(success: (FacebookLoginModel _facebookLoginModel) {
-      handleSocialLoginFlow(facebookLoginModel: _facebookLoginModel);
-    }, failure: (String error) async{
-      await _customBaseViewModel.getAuthService().logOut();
-      await  _customBaseViewModel.stopProgressBar();
+    facebookLoginModel.when(success: (FacebookLoginModel facebookLoginModel) {
+      handleSocialLoginFlow(facebookLoginModel: facebookLoginModel);
+    }, failure: (String error) async {
+      await customBaseViewModel.getAuthService().logOut();
+      await customBaseViewModel.stopProgressBar();
     });
   }
 
   createAccountWithApple() async {
-    // String redirectAppleUri = "https://vocalgauge-14f92.firebaseapp.com/__/auth/handler";
-    CustomBaseViewModel _customBaseViewModel = getCustomBaseViewModel();
-    _customBaseViewModel.showProgressBar();
+    customBaseViewModel.showProgressBar();
 
-    BooleanResult<AppleLoginModel> _appleLoginModelResult =
-    await _customBaseViewModel.getAuthService().signInWithApple();
+    BooleanResult<AppleLoginModel> appleLoginModelResult =
+        await customBaseViewModel.getAuthService().signInWithApple();
 
-    _appleLoginModelResult.when(success: (AppleLoginModel appleLoginModel) {
+    appleLoginModelResult.when(success: (AppleLoginModel appleLoginModel) {
       handleSocialLoginFlow(appleLoginModel: appleLoginModel);
     }, failure: (String error) async {
-      await _customBaseViewModel.getAuthService().logOut();
-      await _customBaseViewModel.stopProgressBar();
+      await customBaseViewModel.getAuthService().logOut();
+      await customBaseViewModel.stopProgressBar();
     });
   }
 
-
   handleSocialLoginFlow(
       {GoogleLoginModel? googleLoginModel,
-        AppleLoginModel? appleLoginModel,
-        FacebookLoginModel? facebookLoginModel}) async {
-    CustomBaseViewModel _customBaseViewModel = getCustomBaseViewModel();
+      AppleLoginModel? appleLoginModel,
+      FacebookLoginModel? facebookLoginModel}) async {
 
     String tokenId =
-    (await _customBaseViewModel.getAuthService().getIdToken())!;
+        (await customBaseViewModel.getAuthService().getIdToken())!;
 
     String notificationToken =
-    await _customBaseViewModel.getNotificationService().getFcmToken();
+        await customBaseViewModel.getNotificationService().getFcmToken();
 
     if (notificationToken == "") {
-      _customBaseViewModel.stopProgressBar();
-      await _customBaseViewModel.getAuthService().logOut();
+      customBaseViewModel.stopProgressBar();
+      await customBaseViewModel.getAuthService().logOut();
       return;
     }
 
-    UserCreateModel _userCreateModel;
+    UserCreateModel userCreateModel;
     loginMethodEnum _loginMethodEnum;
 
     if (googleLoginModel != null) {
-      _userCreateModel = UserCreateModel(
+      userCreateModel = UserCreateModel(
           id: googleLoginModel.firebaseId,
           firebaseTokenId: tokenId,
           accountCreationMethod: loginMethodEnum.google.name,
@@ -99,7 +97,7 @@ class AuthViewModel extends CustomIndexTrackingViewModel {
 
       _loginMethodEnum = loginMethodEnum.google;
     } else if (facebookLoginModel != null) {
-      _userCreateModel = UserCreateModel(
+      userCreateModel = UserCreateModel(
           id: facebookLoginModel.firebaseId,
           firebaseTokenId: tokenId,
           accountCreationMethod: loginMethodEnum.facebook.name,
@@ -111,7 +109,7 @@ class AuthViewModel extends CustomIndexTrackingViewModel {
       _loginMethodEnum = loginMethodEnum.facebook;
     } else {
       //replace this model with apple
-      _userCreateModel = UserCreateModel(
+      userCreateModel = UserCreateModel(
           id: appleLoginModel!.firebaseId,
           firebaseTokenId: tokenId,
           accountCreationMethod: loginMethodEnum.apple.name,
@@ -123,68 +121,67 @@ class AuthViewModel extends CustomIndexTrackingViewModel {
       _loginMethodEnum = loginMethodEnum.apple;
     }
 
-    ApiResult<bool> createUserResult = await _customBaseViewModel
-        .getDataManager()
-        .createUser(_userCreateModel);
+    ApiResult<bool> createUserResult = await customBaseViewModel
+        .getUserApiService()
+        .createUser(userCreateModel);
 
-    FirebaseAnalyticsService _firebaseAnalyticsService =
-    _customBaseViewModel.getAnalyticsService();
+    FirebaseAnalyticsService firebaseAnalyticsService =
+        customBaseViewModel.getAnalyticsService();
 
     createUserResult.when(success: (bool result) async {
-
-      bool result = await _customBaseViewModel
-          .getDataManager()
-          .saveUserModel(_userCreateModel);
+      bool result = await customBaseViewModel
+          .getSharedPreferenceService()
+          .saveUserModel(userCreateModel);
       if (result) {
-        await _firebaseAnalyticsService.logSignUpEvent(_loginMethodEnum);
-        _customBaseViewModel.stopProgressBar();
-        _customBaseViewModel
+        await firebaseAnalyticsService.logSignUpEvent(_loginMethodEnum);
+        customBaseViewModel.stopProgressBar();
+        customBaseViewModel
             .getNavigationService()
             .pushNamedAndRemoveUntil(Routes.mainScreenView);
       }
     }, failure: (ApiErrorModel _errorModel) async {
       if (_errorModel.statusCode == 409) {
         String fcmToken =
-        await _customBaseViewModel.getNotificationService().getFcmToken();
+            await customBaseViewModel.getNotificationService().getFcmToken();
 
         if (fcmToken == "null") {
-          _customBaseViewModel.showErrorDialog();
+          customBaseViewModel.showErrorDialog();
           return;
         }
 
-        ApiResult<UserCreateModel> updateUserResult = await _customBaseViewModel
-            .getDataManager()
+        ApiResult<UserCreateModel> updateUserResult = await customBaseViewModel
+            .getUserApiService()
             .updateFirebaseNotificationToken(fcmToken);
 
         updateUserResult.when(
             success: (UserCreateModel userUpdatedModel) async {
-              bool result = await _customBaseViewModel
-                  .getDataManager()
-                  .saveUserModel(userUpdatedModel);
-              if (result) {
-                await _firebaseAnalyticsService.logLoginEvent(_loginMethodEnum);
-                _customBaseViewModel.stopProgressBar();
-                _customBaseViewModel
-                    .getNavigationService()
-                    .pushNamedAndRemoveUntil(Routes.mainScreenView);
-              } else {
-                await _customBaseViewModel.getAuthService().logOut();
-                _customBaseViewModel.showErrorDialog();
-              }
-            }, failure: (ApiErrorModel errorModel) async {
-          await _customBaseViewModel.getAuthService().logOut();
-          _customBaseViewModel.showErrorDialog();
+          bool result = await customBaseViewModel
+              .getSharedPreferenceService()
+              .saveUserModel(userUpdatedModel);
+          if (result) {
+            await firebaseAnalyticsService.logLoginEvent(_loginMethodEnum);
+            customBaseViewModel.stopProgressBar();
+            customBaseViewModel
+                .getNavigationService()
+                .pushNamedAndRemoveUntil(Routes.mainScreenView);
+          } else {
+            await customBaseViewModel.getAuthService().logOut();
+            customBaseViewModel.showErrorDialog();
+          }
+        }, failure: (ApiErrorModel errorModel) async {
+          await customBaseViewModel.getAuthService().logOut();
+          customBaseViewModel.showErrorDialog();
         });
       } else {
-        await _customBaseViewModel.getAuthService().logOut();
-        await _customBaseViewModel.showErrorDialog(
+        await customBaseViewModel.getAuthService().logOut();
+        await customBaseViewModel.showErrorDialog(
             description: _errorModel.errorMessage);
       }
     });
   }
 
   gotoLoginScreen() {
-    getCustomBaseViewModel()
+    customBaseViewModel
         .getNavigationService()
         .navigateTo(Routes.loginView);
   }

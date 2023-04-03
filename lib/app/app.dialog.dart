@@ -1,7 +1,7 @@
 import 'package:baseproject/app/locator.dart';
 import 'package:baseproject/config/color_config.dart';
 import 'package:baseproject/const/enums/dialogs_enum.dart';
-import 'package:baseproject/ui/widgets/custom_button.dart';
+import 'package:baseproject/ui/widgets/app.button.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -37,11 +37,11 @@ class FailureDialog extends StatelessWidget {
       padding: const EdgeInsets.all(30.0),
       child: Center(
         child: Stack(
+          clipBehavior: Clip.none,
           alignment: AlignmentDirectional.topCenter,
-          overflow: Overflow.visible,
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(14)),
                 color: Colors.white,
               ),
@@ -127,7 +127,7 @@ class SuccessDialog extends StatelessWidget {
       child: Center(
         child: Stack(
           alignment: AlignmentDirectional.topCenter,
-          overflow: Overflow.visible,
+          clipBehavior: Clip.none,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -245,7 +245,6 @@ class LogoutDialog extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 21,
                           color: ColorConfig.greyColor2,
-                          fontFamily: 'ProximaNova',
                         ),
                       ),
                     ],
@@ -256,9 +255,9 @@ class LogoutDialog extends StatelessWidget {
                   child: Text(
                     request.description ?? "Are you sure you want to logout?",
                     style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black54,
-                        fontFamily: 'ProximaNova'),
+                      fontSize: 16,
+                      color: Colors.black54,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -267,9 +266,11 @@ class LogoutDialog extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    RaisedButton(
-                      color: Colors.white,
-                      elevation: 0,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        elevation: 0,
+                      ),
                       onPressed: () {
                         DialogResponse _dialogResponse =
                             DialogResponse(confirmed: false);
@@ -284,9 +285,11 @@ class LogoutDialog extends StatelessWidget {
                     const SizedBox(
                       width: 12,
                     ),
-                    RaisedButton(
-                        color: ColorConfig.greyColor2,
-                        elevation: 0,
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: ColorConfig.greyColor2,
+                          elevation: 0,
+                        ),
                         onPressed: () async {
                           DialogResponse _dialogResponse =
                               DialogResponse(confirmed: true);
@@ -320,7 +323,8 @@ class ConfirmationDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, top: 20, right: 16, bottom: 18),
+        padding:
+            const EdgeInsets.only(left: 16, top: 20, right: 16, bottom: 18),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -351,13 +355,9 @@ class ConfirmationDialog extends StatelessWidget {
                 children: [
                   Flexible(
                     flex: 1,
-                    child: CustomButton(
+                    child: AppBtn(
                       "NO",
-                      backgroundColor: ColorConfig.backgroundColor,
-                      textColor: Colors.black,
-                      height: 42,
-                      fontSize: 16,
-                      buttonPressed: () {
+                      onPressed: () {
                         completer(DialogResponse(confirmed: false));
                       },
                     ),
@@ -367,12 +367,9 @@ class ConfirmationDialog extends StatelessWidget {
                   ),
                   Flexible(
                     flex: 1,
-                    child: CustomButton(
+                    child: AppBtn(
                       "CONFIRM",
-                      backgroundColor: ColorConfig.accentColor,
-                      height: 42,
-                      fontSize: 16,
-                      buttonPressed: () {
+                      onPressed: () {
                         completer(DialogResponse(confirmed: true));
                       },
                     ),
@@ -404,7 +401,8 @@ class PermissionDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: 10.0, top: 15.0, bottom: 15.0),
+                  padding: const EdgeInsets.only(
+                      left: 10.0, top: 15.0, bottom: 15.0),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -416,10 +414,10 @@ class PermissionDialog extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 10.0),
+                  padding: const EdgeInsets.only(left: 10.0),
                   child: Text(
                     request.description ?? "Please Grant ",
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    style: const TextStyle(fontSize: 16, color: Colors.black54),
                   ),
                 ),
                 SizedBox(
@@ -428,9 +426,9 @@ class PermissionDialog extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    RaisedButton(
-                      color: Colors.white,
-                      elevation: 0,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white, elevation: 0),
                       onPressed: () {
                         DialogResponse _dialogResponse =
                             DialogResponse(confirmed: false);
@@ -445,9 +443,10 @@ class PermissionDialog extends StatelessWidget {
                     const SizedBox(
                       width: 12,
                     ),
-                    RaisedButton(
-                      color: ColorConfig.greyColor2,
-                      elevation: 0,
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorConfig.greyColor2,
+                          elevation: 0),
                       onPressed: () async {
                         DialogResponse _dialogResponse =
                             DialogResponse(confirmed: true);

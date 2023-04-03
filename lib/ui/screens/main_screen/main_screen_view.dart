@@ -12,11 +12,10 @@ class MainScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: ViewModelBuilder<MainScreenViewModel>.reactive(
-        onModelReady: (MainScreenViewModel viewModel){
-        },
+        onModelReady: (MainScreenViewModel viewModel) {},
         builder: (context, model, child) {
           return Scaffold(
-            body: getViewForIndex(model.currentIndex,(){
+            body: getViewForIndex(model.currentIndex, () {
               model.setIndex(1);
             }),
             bottomNavigationBar: BottomNavigationBar(
@@ -31,12 +30,11 @@ class MainScreenView extends StatelessWidget {
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
-                  label:'home',
+                  label: 'home',
                 ),
                 BottomNavigationBarItem(
-                 icon: Icon(Icons.account_circle_outlined),
-                  label: 'Account'
-                ),
+                    icon: Icon(Icons.account_circle_outlined),
+                    label: 'Account'),
               ],
             ),
           );
@@ -47,7 +45,7 @@ class MainScreenView extends StatelessWidget {
   }
 }
 
-Widget getViewForIndex(int index,Function gotoSearchScreen) {
+Widget getViewForIndex(int index, Function gotoSearchScreen) {
   switch (index) {
     case 0:
       return const HomeView();

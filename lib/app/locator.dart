@@ -1,6 +1,5 @@
 import 'package:baseproject/base/custom_base_view_model.dart';
-import 'package:baseproject/data/data_manager.dart';
-import 'package:baseproject/data/network/api_service/users/user_api_service.dart';
+import 'package:baseproject/data/network/api_service/user_api_service.dart';
 import 'package:baseproject/data/prefs/shared_preference_service.dart';
 import 'package:baseproject/services/firebase_auth_service.dart';
 import 'package:baseproject/services/firebase_notification_service.dart';
@@ -18,8 +17,8 @@ import '../services/firebase_crashlytics_service.dart';
 
 GetIt locator = GetIt.I;
 
+// @stacked-service
 void setupLocator() {
-
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => NavigationService());
@@ -31,9 +30,11 @@ void setupLocator() {
   // locator.registerLazySingleton(() => FirebasePerformanceService());
 
   //Data
-  locator.registerLazySingleton(() => DataManager());
   locator.registerLazySingleton(() => Client());
   locator.registerLazySingleton(() => SharedPreferenceService());
+
+  //Api Services
+  locator.registerLazySingleton(() => UserApiService());
 
   //View Models
   locator.registerLazySingleton(() => AuthViewModel());
@@ -42,8 +43,4 @@ void setupLocator() {
   locator.registerLazySingleton(() => StartUpViewModel());
   locator.registerLazySingleton(() => CustomBaseViewModel());
   locator.registerLazySingleton(() => ProfileViewModel());
-
-  //Api Services
-  locator.registerLazySingleton(() => UserApiService());
-
 }

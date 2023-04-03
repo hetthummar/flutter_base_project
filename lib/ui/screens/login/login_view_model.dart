@@ -2,8 +2,8 @@ import 'package:baseproject/app/routes/setup_routes.router.dart';
 import 'package:baseproject/base/custom_base_view_model.dart';
 import 'package:baseproject/models/app_models/api_error_model.dart';
 import 'package:baseproject/models/user/user_create_model.dart';
-import 'package:baseproject/utils/api_utils/api_result/api_result.dart';
 import 'package:baseproject/utils/app_util.dart';
+import 'package:baseproject/utils/results/api_result/api_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../../../const/enums/login_method_enum.dart';
@@ -52,7 +52,7 @@ class LoginViewModel extends CustomBaseViewModel {
           showErrorDialog(
               title: "Email not registered",
               description:
-              "Entered email is not registered. please check your email");
+                  "Entered email is not registered. please check your email");
         } else {
           showErrorDialog(
               title: "Problem occured", description: e.message.toString());
@@ -70,11 +70,9 @@ class LoginViewModel extends CustomBaseViewModel {
 
     showProgressBar();
     String response =
-    await getAuthService().signInWithEmailAndPassword(email, password);
-
+        await getAuthService().signInWithEmailAndPassword(email, password);
 
     if (response == "Success") {
-
       String fcmToken = await getNotificationService().getFcmToken();
 
       if (fcmToken == "null") {
@@ -83,11 +81,11 @@ class LoginViewModel extends CustomBaseViewModel {
       }
 
       ApiResult<UserCreateModel> updateUserResult =
-      await getDataManager().updateFirebaseNotificationToken(fcmToken);
+          await getUserApiService().updateFirebaseNotificationToken(fcmToken);
 
       updateUserResult.when(success: (UserCreateModel userUpdatedModel) async {
-
-        bool result = await getDataManager().saveUserModel(userUpdatedModel);
+        bool result =
+            await getSharedPreferenceService().saveUserModel(userUpdatedModel);
         if (result) {
           await getAnalyticsService().logLoginEvent(loginMethodEnum.email);
           stopProgressBar();

@@ -1,11 +1,9 @@
 import 'package:baseproject/config/color_config.dart';
 import 'package:baseproject/config/style_config.dart';
+import 'package:baseproject/main.dart';
 import 'package:baseproject/ui/widgets/custom_back_button.dart';
-import 'package:baseproject/ui/widgets/custom_button.dart';
-import 'package:baseproject/ui/widgets/password_text_field.dart';
 import 'package:baseproject/utils/app_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 
 import 'login_view_model.dart';
@@ -32,25 +30,25 @@ class LoginView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 3),
               child: Text(
                 "Login",
-                style: appBarText,
+                style: $styles.text.h2
               ),
             ),
             centerTitle: true,
           ),
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4.w),
+            padding: EdgeInsets.symmetric(horizontal: 4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 3.h,
+                  height: 3,
                 ),
                 Text(
                   "Email",
                   style: title1Text,
                 ),
                 SizedBox(
-                  height: 1.h,
+                  height: 1,
                 ),
                 TextFormField(
                   onChanged: (text) {
@@ -74,18 +72,17 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 3.h,
+                  height: 3,
                 ),
                 Text(
                   "Password",
                   style: title1Text,
                 ),
                 SizedBox(
-                  height: 1.h,
+                  height: 1,
                 ),
-                passwordWidget(passwordController),
                 SizedBox(
-                  height: 5.h,
+                  height: 5,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -99,21 +96,8 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 4.h,
-                ),
-                CustomButton(
-                  "Continue",
-                  backgroundColor: ColorConfig.accentColor,
-                  height: 44,
-                  fontSize: 16,
-                  isDisabled: !model.continueBtnStatus,
-                  buttonPressed: () {
-                    if (model.continueBtnStatus) {
-                      model.loginUser(
-                          emailController.text, passwordController.text);
-                    }
-                  },
+                const SizedBox(
+                  height: 4,
                 ),
               ],
             ),
@@ -124,16 +108,3 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class passwordWidget extends ViewModelWidget<LoginViewModel> {
-  TextEditingController passwordController;
-
-  passwordWidget(this.passwordController, {Key? key})
-      : super(key: key, reactive: false);
-
-  @override
-  Widget build(BuildContext context, LoginViewModel viewModel) {
-    return passwordTextField((bool continueBtnStatus) {
-      viewModel.changePasswordValidStatus(continueBtnStatus);
-    }, passwordController);
-  }
-}

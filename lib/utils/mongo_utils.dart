@@ -1,10 +1,8 @@
 import 'package:objectid/objectid.dart';
 
 class MongoUtils {
-
-  String generateUniqueMongoId(){
+  String generateUniqueMongoId() {
     final id = ObjectId();
     return id.hexString;
   }
-
 }

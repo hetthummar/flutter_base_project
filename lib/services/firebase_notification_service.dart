@@ -2,45 +2,61 @@ import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:baseproject/const/app_const.dart';
-import 'package:baseproject/main.dart';
+import 'package:baseproject/utils/app_util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebaseNotificationService {
+  AwesomeNotifications awesomeNotifications = AwesomeNotifications();
+
+  resetBadgeCount() async {
+    await awesomeNotifications.resetGlobalBadge();
+  }
+
+  deleteInstanceId() async {
+    await FirebaseMessaging.instance.deleteToken();
+  }
+
+  cancelAllNotifications() {
+    awesomeNotifications.cancelAll();
+  }
+
   Future<String> getFcmToken() async {
     try {
-      FirebaseMessaging _fcm = FirebaseMessaging.instance;
-      String? fcmToken = await _fcm.getToken();
+      FirebaseMessaging fcm = FirebaseMessaging.instance;
+      String? fcmToken = await fcm.getToken();
 
       return fcmToken.toString();
     } catch (e) {
-      print("Error in getting fcm token :- " + e.toString());
       return "";
     }
   }
 
   initMessaging() {
-    FirebaseMessaging _fcm = FirebaseMessaging.instance;
+    FirebaseMessaging fcm = FirebaseMessaging.instance;
 
-    _fcm.getInitialMessage().then((value) {
-      //when app is termeinated and user click on notification we get value of notification here
+    fcm.getInitialMessage().then((value) {
+      //when app is terminated and user click on notification we get value of notification here
     });
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    // FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
-        Map<String, dynamic>? notificationMessage = message.data;
+      (RemoteMessage remoteNotification) {
+        RemoteNotification? notificationMessage =
+            remoteNotification.notification;
 
-        if (notificationMessage != null &&
-            notificationMessage.keys.isNotEmpty) {
-          showNotification(
-            notificationMessage['title'],
-            notificationMessage['body'],
-            notificationMessage['type'],
-            image: notificationMessage['image'],
-            id: notificationMessage['id'],
-          );
+        if (notificationMessage != null) {
+          if (notificationMessage.title != null &&
+              notificationMessage.body != null) {
+            bool isAndroid = AppUtils().isAndroid();
+
+            showNotification(
+                notificationMessage.title!, notificationMessage.body!, null,
+                image: isAndroid
+                    ? notificationMessage.android?.imageUrl
+                    : notificationMessage.apple?.imageUrl);
+          }
         }
       },
     );
@@ -60,9 +76,9 @@ class FirebaseNotificationService {
   }
 }
 
-showNotification(String title, String message, String type,
-    {String? image, String? id}) async {
-  bool result = await AwesomeNotifications().isNotificationAllowed();
+showNotification(String title, String message, String? type,
+    {String? image}) async {
+  // bool result = await AwesomeNotifications().isNotificationAllowed();
   if (image != null) {
     await AwesomeNotifications().createNotification(
       content: NotificationContent(

@@ -10,22 +10,20 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
-      onModelReady: (HomeViewModel model) async {},
-      fireOnModelReadyOnce: true,
+      onViewModelReady: (HomeViewModel model) async {},
+      fireOnViewModelReadyOnce: true,
       initialiseSpecialViewModelsOnce: true,
       disposeViewModel: false,
-      createNewModelOnInsert: false,
+      createNewViewModelOnInsert: false,
       builder: (context, model, child) {
         return Scaffold(
             appBar: buildAppBar(model),
-            body: const Center(child: Text("Home View"))
-        );
+            body: const Center(child: Text("Home View")));
       },
       viewModelBuilder: () => locator<HomeViewModel>(),
     );
   }
 }
-
 
 AppBar buildAppBar(HomeViewModel model) {
   return AppBar(

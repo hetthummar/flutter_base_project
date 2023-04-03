@@ -1,1 +1,1 @@
-enum dialogEnum { saveOrNot, success, confirmation, failure,permission }
+enum dialogEnum { saveOrNot, success, confirmation, failure, permission }

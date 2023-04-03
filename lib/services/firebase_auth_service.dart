@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:baseproject/models/login_models/apple_login_model.dart';
 import 'package:baseproject/models/login_models/facebook_login_model.dart';
 import 'package:baseproject/models/login_models/google_login_model.dart';
-import 'package:baseproject/utils/api_utils/boolean_result/boolean_result.dart';
+import 'package:baseproject/utils/results/boolean_result/boolean_result.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -57,16 +57,16 @@ class FirebaseAuthService {
         );
 
         await _auth.signInWithCredential(credential);
-        User _user = (_auth.currentUser)!;
+        User user = (_auth.currentUser)!;
 
-        GoogleLoginModel _googleLoginModel = GoogleLoginModel(
+        GoogleLoginModel googleLoginModel = GoogleLoginModel(
             email: googleSignInAccount.email,
-            firebaseId: _user.uid,
-            photoUrl: _user.photoURL.toString(),
+            firebaseId: user.uid,
+            photoUrl: user.photoURL.toString(),
             googleLoginId: googleSignInAccount.id,
             displayName: googleSignInAccount.displayName.toString());
 
-        return BooleanResult.success(data: _googleLoginModel);
+        return BooleanResult.success(data: googleLoginModel);
       } else {
         return const BooleanResult.failure(error: "No Account Selected");
       }

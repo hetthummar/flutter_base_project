@@ -1,6 +1,5 @@
 import 'package:baseproject/ui/screens/startup/startup_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 
 class StartUpView extends StatelessWidget {
@@ -18,7 +17,7 @@ class StartUpView extends StatelessWidget {
           backgroundColor: Colors.black87,
           body: Center(
             child: SizedBox(
-              width: 0.54.sw,
+              width: 0.5,
               child: Image.asset(
                 "assets/logos/app_logo.png",
                 fit: BoxFit.fitWidth,
