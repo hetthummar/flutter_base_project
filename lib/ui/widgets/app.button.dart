@@ -67,7 +67,7 @@ class AppBtn extends StatelessWidget {
       backgroundColor: backgroundColor,
       shape: RoundedRectangleBorder(borderRadius: borderRadius),
       side: borderColor != null ? BorderSide(color: borderColor!) : null,
-      padding: padding ?? EdgeInsets.all($styles.insets.md),
+      padding: padding ?? EdgeInsets.all($styles.insets.s),
       splashFactory:
           rippleEffect ? InkRipple.splashFactory : NoSplash.splashFactory,
       // surfaceTintColor: $styles.colors.primaryContainer,

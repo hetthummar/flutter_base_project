@@ -7,7 +7,7 @@ class ThemeConfig {
     appBarTheme: AppBarTheme(
       color: $styles.colors.white,
       elevation: 0,
-      titleTextStyle: $styles.text.h2.copyWith(color: $styles.colors.primary),
+      titleTextStyle: $styles.text.headlineSmall.copyWith(color: $styles.colors.primary),
     ),
     dividerColor: Colors.black26,
     fontFamily: 'Poppins',

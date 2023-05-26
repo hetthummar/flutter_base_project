@@ -30,7 +30,7 @@ class LoginView extends StatelessWidget {
               padding: const EdgeInsets.only(top: 3),
               child: Text(
                 "Login",
-                style: $styles.text.h2
+                style: $styles.text.headlineMedium
               ),
             ),
             centerTitle: true,

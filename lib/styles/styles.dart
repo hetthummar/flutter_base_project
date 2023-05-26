@@ -59,31 +59,45 @@ class _Text {
 
   final double _scale;
 
-  late final TextStyle h1 = _createFont(sizePx: 32, heightPx: 62);
-  late final TextStyle h2 = _createFont(sizePx: 24, heightPx: 46,weight: FontWeight.w600);
   late final TextStyle h3 =
-      _createFont(sizePx: 20, heightPx: 36, weight: FontWeight.w600);
-  late final TextStyle h4 = _createFont(
-      sizePx: 16, heightPx: 23, spacingPc: 5, weight: FontWeight.w600);
+  _createFont(sizePx: 20, heightPx: 36, weight: FontWeight.w600);
 
-  late final TextStyle title1 =
-      _createFont(sizePx: 16, heightPx: 26, spacingPc: 5);
-  late final TextStyle title2 = _createFont(sizePx: 14, heightPx: 16.38);
+  late final TextStyle displayLarge = _createFont(sizePx: 57, heightPx: 64);
+  late final TextStyle displayMedium = _createFont(sizePx: 45, heightPx: 52);
+  late final TextStyle displaySmall = _createFont(sizePx: 36, heightPx: 44);
 
-  late final TextStyle body1 =
-      _createFont(sizePx: 16, heightPx: 26, spacingPc: 5);
-  late final TextStyle body2 = _createFont(sizePx: 14, heightPx: 16.38);
+  late final TextStyle headlineLarge = _createFont(sizePx: 32, heightPx: 40);
+  late final TextStyle headlineMedium = _createFont(sizePx: 28, heightPx: 36);
+  late final TextStyle headlineSmall = _createFont(sizePx: 24, heightPx: 32);
 
-  late final TextStyle caption = _createFont(sizePx: 14, heightPx: 16.38);
+  late final TextStyle titleLarge = _createFont(sizePx: 22, heightPx: 28);
+  late final TextStyle titleMedium =
+  _createFont(sizePx: 16, heightPx: 24, spacingPc: 0.15);
+  late final TextStyle titleSmall =
+  _createFont(sizePx: 14, heightPx: 20, spacingPc: 0.1);
+
+  late final TextStyle labelLarge =
+  _createFont(sizePx: 14, heightPx: 20, spacingPc: 0.15);
+  late final TextStyle labelMedium =
+  _createFont(sizePx: 12, heightPx: 16, spacingPc: 0.5);
+  late final TextStyle labelSmall =
+  _createFont(sizePx: 11, heightPx: 16, spacingPc: 0.5);
+
+  late final TextStyle bodyLarge =
+  _createFont(sizePx: 16, heightPx: 24, spacingPc: 0.5);
+  late final TextStyle bodyMedium =
+  _createFont(sizePx: 14, heightPx: 20, spacingPc: 0.25);
+  late final TextStyle bodySmall =
+  _createFont(sizePx: 12, heightPx: 16, spacingPc: 0.4);
 
   late final TextStyle btn = _createFont(sizePx: 16, heightPx: 14);
 
   TextStyle _createFont(
       {TextStyle? style,
-      required double sizePx,
-      double? heightPx,
-      double? spacingPc,
-      FontWeight? weight}) {
+        required double sizePx,
+        double? heightPx,
+        double? spacingPc,
+        FontWeight? weight}) {
     sizePx *= _scale;
     if (heightPx != null) {
       heightPx *= _scale;
@@ -95,7 +109,7 @@ class _Text {
         fontSize: sizePx,
         height: heightPx != null ? (heightPx / sizePx) : style.height,
         letterSpacing:
-            spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
+        spacingPc != null ? sizePx * spacingPc * 0.01 : style.letterSpacing,
         fontWeight: weight);
   }
 }
@@ -136,10 +150,10 @@ class _Insets {
 
   late final double xxs = 4 * _scale;
   late final double xs = 8 * _scale;
-  late final double sm = 16 * _scale;
-  late final double md = 20 * _scale;
-  late final double lg = 24 * _scale;
-  late final double xl = 32 * _scale;
+  late final double s = 16 * _scale;
+  late final double m = 24 * _scale;
+  late final double l = 32 * _scale;
+  late final double xl = 40 * _scale;
   late final double xxl = 48 * _scale;
   late final double xxxl = 56 * _scale;
   late final double offset = 80 * _scale;
