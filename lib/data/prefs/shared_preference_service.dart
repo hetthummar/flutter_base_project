@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:baseproject/const/shared_pref_const.dart';
-import 'package:baseproject/models/user/user_create_model.dart';
+import 'package:fajrApp/const/shared_pref_const.dart';
+import 'package:fajrApp/models/user/user_create_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceService {

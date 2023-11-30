@@ -1,9 +1,9 @@
 // import 'dart:math';
 //
 // import 'package:awesome_notifications/awesome_notifications.dart';
-// import 'package:baseproject/app/locator.dart';
-// import 'package:baseproject/const/shared_pref_const.dart';
-// import 'package:baseproject/main.dart';
+// import 'package:fajrApp/app/locator.dart';
+// import 'package:fajrApp/const/shared_pref_const.dart';
+// import 'package:fajrApp/main.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 //

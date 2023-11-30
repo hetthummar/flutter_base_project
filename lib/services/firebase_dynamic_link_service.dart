@@ -1,5 +1,5 @@
-import 'package:baseproject/const/app_const.dart';
-import 'package:baseproject/services/firebase_auth_service.dart';
+import 'package:fajrApp/const/app_const.dart';
+import 'package:fajrApp/services/firebase_auth_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:stacked_services/stacked_services.dart';
 

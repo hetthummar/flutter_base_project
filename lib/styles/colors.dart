@@ -1,15 +1,17 @@
-import 'package:baseproject/utils/color_utils.dart';
+import 'package:fajrApp/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {
   /// Common
 
-  final Color primary = const Color(0xFF8C52FF);
-  final Color primaryContainer = const Color(0xFFE0D5FF);
+  final Color primary = const Color(0xFFFF5263);
+  final Color secondary = const Color(0xFF000000);
+
   final Color primaryDark = const Color(0xFF24005B);
+  final Color secondaryDark = const Color(0xFF24005B);
 
   final Color onPrimary = const Color(0xffffffff);
-  final Color onPrimaryContainer = const Color(0xff212121);
+  final Color primaryContainer = const Color(0xff212121);
 
   final Color black = const Color(0xff212121);
   final Color white = Colors.white;
@@ -37,11 +39,9 @@ class AppColors {
       primary: primary,
       onPrimary: onPrimary,
       primaryContainer: primaryContainer,
-      onPrimaryContainer: onPrimaryContainer,
       secondary: primary,
       onSecondary: onPrimary,
       secondaryContainer: primaryContainer,
-      onSecondaryContainer: onPrimaryContainer,
       background: white,
       surface: white,
       onBackground: black,

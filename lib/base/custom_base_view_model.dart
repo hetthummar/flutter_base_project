@@ -1,24 +1,25 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:baseproject/app/app.bottomsheets.dart';
-import 'package:baseproject/app/app.dialog.dart';
-import 'package:baseproject/app/app.snackbar.dart';
-import 'package:baseproject/app/locator.dart';
-import 'package:baseproject/app/routes/setup_routes.router.dart';
-import 'package:baseproject/const/app_const.dart';
-import 'package:baseproject/const/enums/bottom_sheet_enums.dart';
-import 'package:baseproject/const/enums/snackbar_enum.dart';
-import 'package:baseproject/data/network/api_service/user_api_service.dart';
-import 'package:baseproject/data/prefs/shared_preference_service.dart';
-import 'package:baseproject/main.dart';
-import 'package:baseproject/services/firebase_analytics_service.dart';
-import 'package:baseproject/services/firebase_auth_service.dart';
-import 'package:baseproject/services/firebase_dynamic_link_service.dart';
-import 'package:baseproject/services/firebase_notification_service.dart';
-import 'package:baseproject/utils/app_util.dart';
-import 'package:baseproject/utils/results/boolean_result/boolean_result.dart';
+import 'package:fajrApp/app/app.bottomsheets.dart';
+import 'package:fajrApp/app/app.dialog.dart';
+import 'package:fajrApp/app/app.snackbar.dart';
+import 'package:fajrApp/app/locator.dart';
+import 'package:fajrApp/app/routes/setup_routes.router.dart';
+import 'package:fajrApp/const/app_const.dart';
+import 'package:fajrApp/const/enums/bottom_sheet_enums.dart';
+import 'package:fajrApp/const/enums/snackbar_enum.dart';
+import 'package:fajrApp/data/network/api_service/user_api_service.dart';
+import 'package:fajrApp/data/prefs/shared_preference_service.dart';
+import 'package:fajrApp/main.dart';
+import 'package:fajrApp/services/firebase_analytics_service.dart';
+import 'package:fajrApp/services/firebase_auth_service.dart';
+import 'package:fajrApp/services/firebase_dynamic_link_service.dart';
+import 'package:fajrApp/services/firebase_notification_service.dart';
+import 'package:fajrApp/utils/app_util.dart';
+import 'package:fajrApp/utils/results/boolean_result/boolean_result.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:image_size_getter/file_input.dart';
@@ -32,7 +33,6 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomBaseViewModel extends BaseViewModel {
-
   //region STACKED-SERVICE
   NavigationService getNavigationService() => locator<NavigationService>();
 
@@ -41,28 +41,31 @@ class CustomBaseViewModel extends BaseViewModel {
   DialogService getDialogService() => locator<DialogService>();
 
   SnackbarService getSnackBarService() => locator<SnackbarService>();
+
   //endregion
 
   //region FIREBASE-SERVICE
-  FirebaseNotificationService getNotificationService() =>
-      locator<FirebaseNotificationService>();
+  FirebaseNotificationService getNotificationService() => locator<FirebaseNotificationService>();
 
   FirebaseAuthService getAuthService() => locator<FirebaseAuthService>();
 
-  FirebaseAnalyticsService getAnalyticsService() =>
-      locator<FirebaseAnalyticsService>();
+  FirebaseAnalyticsService getAnalyticsService() => locator<FirebaseAnalyticsService>();
 
-  FirebaseDynamicLinkService getFirebaseDynamicLinkService() =>
-      locator<FirebaseDynamicLinkService>();
+  FirebaseDynamicLinkService getFirebaseDynamicLinkService() => locator<FirebaseDynamicLinkService>();
+
   //endregion
 
   //region SHARED-PREFERENCE-SERVICE
-  SharedPreferenceService getSharedPreferenceService() =>
-      locator<SharedPreferenceService>();
+  SharedPreferenceService getSharedPreferenceService() => locator<SharedPreferenceService>();
+
   //endregion
+
+  // APPUTILS
+  AppUtils getAppUtils() => AppUtils();
 
   //region API-SERVICE
   UserApiService getUserApiService() => locator<UserApiService>();
+
   //endregion
 
   //region EASY-LOADING
@@ -81,6 +84,7 @@ class CustomBaseViewModel extends BaseViewModel {
   stopProgressBar() {
     EasyLoading.dismiss();
   }
+
   //endregion
 
   //region SNACK-BAR HANDLING
@@ -99,8 +103,11 @@ class CustomBaseViewModel extends BaseViewModel {
         },
       );
     } else {
-      EasyLoading.showToast(message,
-          duration: toastDuration, maskType: EasyLoadingMaskType.clear);
+      EasyLoading.showToast(
+        message,
+        duration: toastDuration,
+        maskType: EasyLoadingMaskType.clear,
+      );
     }
   }
 
@@ -108,46 +115,49 @@ class CustomBaseViewModel extends BaseViewModel {
     Duration toastDuration = duration ?? const Duration(milliseconds: 1200);
 
     getSnackBarService().showCustomSnackBar(
-        variant: snackBarEnum.successSnackBar,
-        message: message,
-        duration: toastDuration,
-        onTap: () {});
+      variant: snackBarEnum.successSnackBar,
+      message: message,
+      duration: toastDuration,
+      onTap: () {},
+    );
   }
 
   showErrorSnackBar(String message, {Duration? duration}) {
     Duration toastDuration = duration ?? const Duration(milliseconds: 2200);
 
     getSnackBarService().showCustomSnackBar(
-        variant: snackBarEnum.errorSnackBar,
-        message: message,
-        duration: toastDuration,
-        onTap: () {});
+      variant: snackBarEnum.errorSnackBar,
+      message: message,
+      duration: toastDuration,
+      onTap: () {},
+    );
   }
 
   showWarningSnackBar(String message, {Duration? duration}) {
     Duration toastDuration = duration ?? const Duration(milliseconds: 2200);
 
     getSnackBarService().showCustomSnackBar(
-        variant: snackBarEnum.warningSnackBar,
-        message: message,
-        duration: toastDuration,
-        onTap: () {});
+      variant: snackBarEnum.warningSnackBar,
+      message: message,
+      duration: toastDuration,
+      onTap: () {},
+    );
   }
+
   //endregion
 
   //region DIALOG HANDLING
-  logout(
-      {bool shouldRedirectToAuthenticationPage = true,
-      bool shouldShowDialog = false}) async {
+  logout({bool shouldRedirectToAuthenticationPage = true, bool shouldShowDialog = false}) async {
     DialogResponse? dialogResponse;
 
     if (shouldShowDialog) {
       dialogResponse = await getDialogService().showDialog(
-          title: "Logout?",
-          description: "Would you like to log out of your account",
-          cancelTitle: 'Cancel',
-          buttonTitleColor: $styles.colors.white,
-          cancelTitleColor: $styles.colors.white);
+        title: "Logout?",
+        description: "Would you like to log out of your account",
+        cancelTitle: 'Cancel',
+        buttonTitleColor: $styles.colors.white,
+        cancelTitleColor: $styles.colors.white,
+      );
     } else {
       dialogResponse = DialogResponse(confirmed: true);
     }
@@ -167,19 +177,21 @@ class CustomBaseViewModel extends BaseViewModel {
     }
   }
 
-  showErrorDialog(
-      {String title = "Problem occurred",
-      String description = "Some problem occurred Please try again",
-      bool isDismissible = true}) async {
+  showErrorDialog({
+    String title = "Problem occurred",
+    String description = "Some problem occurred Please try again",
+    bool isDismissible = true,
+  }) async {
     stopProgressBar();
 
     if (AppUtils().isAndroid()) {
       await getBottomSheetService().showCustomSheet(
-          title: title,
-          description: description,
-          mainButtonTitle: "OK",
-          variant: bottomSheetEnum.error,
-          barrierDismissible: isDismissible);
+        title: title,
+        description: description,
+        mainButtonTitle: "OK",
+        variant: BottomSheetEnum.error,
+        barrierDismissible: isDismissible,
+      );
     } else {
       getDialogService().showDialog(
         title: title,
@@ -189,6 +201,7 @@ class CustomBaseViewModel extends BaseViewModel {
       );
     }
   }
+
   //endregion
 
   //region PERMISSIONS HANDLING
@@ -197,8 +210,7 @@ class CustomBaseViewModel extends BaseViewModel {
     if (permission == PermissionStatus.granted) return true;
 
     if (permission == PermissionStatus.denied) {
-      PermissionStatus permissionStatus =
-          await Permission.notification.request();
+      PermissionStatus permissionStatus = await Permission.notification.request();
       return permissionStatus == PermissionStatus.granted;
     }
 
@@ -221,23 +233,18 @@ class CustomBaseViewModel extends BaseViewModel {
     }
   }
 
-  Future<bool> askAndroidPhotoPermission(
-      {String? title, String? description}) async {
+  Future<bool> askAndroidPhotoPermission({String? title, String? description}) async {
     bool permissionGranted = false;
-    bool shouldShowRationalBefore =
-        await Permission.storage.shouldShowRequestRationale;
+    bool shouldShowRationalBefore = await Permission.storage.shouldShowRequestRationale;
     PermissionStatus permissionStatus = await Permission.storage.request();
     if (permissionStatus == PermissionStatus.granted) {
       permissionGranted = true;
     } else {
-      bool shouldShowRationalAfter =
-          await Permission.storage.shouldShowRequestRationale;
+      bool shouldShowRationalAfter = await Permission.storage.shouldShowRequestRationale;
       if (shouldShowRationalBefore == shouldShowRationalAfter) {
         DialogResponse? dialogResponse = await getDialogService().showDialog(
-            title:
-                title ?? '${AppConst.appName} would like to access your photos',
-            description: description ??
-                'Allows “${AppConst.appName}” to access your photos so you can select photos',
+            title: title ?? '${AppConst.appName} would like to access your photos',
+            description: description ?? 'Allows “${AppConst.appName}” to access your photos so you can select photos',
             cancelTitle: 'Cancel',
             buttonTitleColor: $styles.colors.white,
             cancelTitleColor: $styles.colors.white);
@@ -252,23 +259,18 @@ class CustomBaseViewModel extends BaseViewModel {
     return permissionGranted;
   }
 
-  Future<bool> askAndroidCameraPermission(
-      {String? title, String? description}) async {
+  Future<bool> askAndroidCameraPermission({String? title, String? description}) async {
     bool permissionGranted = false;
-    bool shouldShowRationalBefore =
-        await Permission.camera.shouldShowRequestRationale;
+    bool shouldShowRationalBefore = await Permission.camera.shouldShowRequestRationale;
     PermissionStatus permissionStatus = await Permission.camera.request();
     if (permissionStatus == PermissionStatus.granted) {
       permissionGranted = true;
     } else {
-      bool shouldShowRationalAfter =
-          await Permission.camera.shouldShowRequestRationale;
+      bool shouldShowRationalAfter = await Permission.camera.shouldShowRequestRationale;
       if (shouldShowRationalBefore == shouldShowRationalAfter) {
         DialogResponse? dialogResponse = await getDialogService().showDialog(
-            title:
-                title ?? '${AppConst.appName} would like to access your camera',
-            description: description ??
-                'Allows “${AppConst.appName}” to access your camera so you can take picture',
+            title: title ?? '${AppConst.appName} would like to access your camera',
+            description: description ?? 'Allows “${AppConst.appName}” to access your camera so you can take picture',
             cancelTitle: 'Cancel',
             buttonTitleColor: $styles.colors.white,
             cancelTitleColor: $styles.colors.white);
@@ -283,8 +285,7 @@ class CustomBaseViewModel extends BaseViewModel {
     return permissionGranted;
   }
 
-  Future<bool> askIOSPhotoPermission(
-      {String? title, String? description}) async {
+  Future<bool> askIOSPhotoPermission({String? title, String? description}) async {
     bool permissionGranted = false;
     PermissionStatus permissionStatus = await Permission.photos.status;
 
@@ -294,12 +295,13 @@ class CustomBaseViewModel extends BaseViewModel {
       PermissionStatus permissionStatus = await Permission.photos.request();
       permissionGranted = (permissionStatus == PermissionStatus.granted);
     } else {
-      print("permission : ");
+      if (kDebugMode) {
+        print("permission : ");
+      }
 
       DialogResponse? dialogResponse = await getDialogService().showDialog(
         title: title ?? '${AppConst.appName} would like to access your photos',
-        description: description ??
-            'Allows “${AppConst.appName}” to access your photos so you can share your folders',
+        description: description ?? 'Allows “${AppConst.appName}” to access your photos so you can share your folders',
         cancelTitle: 'Cancel',
         buttonTitleColor: $styles.colors.white,
         cancelTitleColor: $styles.colors.white,
@@ -315,8 +317,7 @@ class CustomBaseViewModel extends BaseViewModel {
     return permissionGranted;
   }
 
-  Future<bool> askIOSCameraPermission(
-      {String? title, String? description}) async {
+  Future<bool> askIOSCameraPermission({String? title, String? description}) async {
     bool permissionGranted = false;
     PermissionStatus permissionStatus = await Permission.camera.status;
 
@@ -326,11 +327,9 @@ class CustomBaseViewModel extends BaseViewModel {
       PermissionStatus permissionStatus = await Permission.camera.request();
       permissionGranted = (permissionStatus == PermissionStatus.granted);
     } else {
-
       DialogResponse? dialogResponse = await getDialogService().showDialog(
         title: title ?? '${AppConst.appName} would like to access your camera',
-        description: description ??
-            'Allows “${AppConst.appName}” to access your camera so you can share your folders',
+        description: description ?? 'Allows “${AppConst.appName}” to access your camera so you can share your folders',
         cancelTitle: 'Cancel',
         buttonTitleColor: $styles.colors.white,
         cancelTitleColor: $styles.colors.white,
@@ -345,6 +344,7 @@ class CustomBaseViewModel extends BaseViewModel {
 
     return permissionGranted;
   }
+
   //endregion
 
   //region link HANDLING
@@ -361,6 +361,7 @@ class CustomBaseViewModel extends BaseViewModel {
       showErrorSnackBar("Some problem occurred while opening link. Please try again later.");
     }
   }
+
   //endregion
 
   //region IMAGE HANDLING
@@ -368,15 +369,17 @@ class CustomBaseViewModel extends BaseViewModel {
     return ImageSizeGetter.getSize(FileInput(File(filePath)));
   }
 
-  Future<BooleanResult<String>> downloadAndSaveImageLocally(
-      String imageUrl) async {
+  Future<BooleanResult<String>> downloadAndSaveImageLocally(String imageUrl) async {
     try {
-      Response response = await Dio()
-          .get(imageUrl, options: Options(responseType: ResponseType.bytes));
+      Response response = await Dio().get(
+        imageUrl,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
 
       Directory documentDirectory = await getApplicationDocumentsDirectory();
-      File file =
-          File(join(documentDirectory.path, "${AppUtils().getRandomId()}.jpg"));
+      File file = File(join(documentDirectory.path, "${AppUtils().getRandomId()}.jpg"));
       file.writeAsBytesSync(response.data);
       return BooleanResult.success(data: file.path);
     } catch (e) {
@@ -400,8 +403,12 @@ class CustomBaseViewModel extends BaseViewModel {
   Future<BooleanResult<String>> shareImage(String imageUrl) async {
     showProgressBar();
     try {
-      Response response = await Dio()
-          .get(imageUrl, options: Options(responseType: ResponseType.bytes));
+      Response response = await Dio().get(
+        imageUrl,
+        options: Options(
+          responseType: ResponseType.bytes,
+        ),
+      );
       Directory tempDir = await getApplicationDocumentsDirectory();
       File file = File('${tempDir.path}/${AppUtils().getRandomId()}.jpg');
       await file.writeAsBytes(response.data);
@@ -413,8 +420,8 @@ class CustomBaseViewModel extends BaseViewModel {
       showErrorSnackBar(e.toString());
       return BooleanResult.failure(error: e.toString());
     }
-
   }
+
   //endregion
 
   //region NAVIGATION HANDLING
@@ -426,6 +433,7 @@ class CustomBaseViewModel extends BaseViewModel {
   goToPreviousScreen() {
     getNavigationService().back();
   }
+
   //endregion
 
   //region APP HANDLING
@@ -443,6 +451,5 @@ class CustomBaseViewModel extends BaseViewModel {
     setUpBototmSheet();
     setupDialogUi();
   }
-  //endregion
-
+//endregion
 }

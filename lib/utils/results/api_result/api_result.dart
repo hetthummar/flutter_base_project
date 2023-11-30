@@ -1,4 +1,4 @@
-import 'package:baseproject/models/app_models/api_error_model.dart';
+import 'package:fajrApp/models/app_models/api_error_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

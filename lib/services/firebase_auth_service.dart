@@ -1,12 +1,15 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:baseproject/models/login_models/apple_login_model.dart';
-import 'package:baseproject/models/login_models/facebook_login_model.dart';
-import 'package:baseproject/models/login_models/google_login_model.dart';
-import 'package:baseproject/utils/results/boolean_result/boolean_result.dart';
+import 'package:fajrApp/models/login_models/apple_login_model.dart';
+import 'package:fajrApp/models/login_models/facebook_login_model.dart';
+import 'package:fajrApp/models/login_models/google_login_model.dart';
+import 'package:fajrApp/utils/results/boolean_result/boolean_result.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
@@ -26,13 +29,36 @@ class FirebaseAuthService {
     await _auth.sendPasswordResetEmail(email: email);
   }
 
+  Future<String> signInWithCredential(AuthCredential authCred) async {
+    String returnResult = "error";
+    try {
+      if (kDebugMode) {
+        print("SSSSSS:${authCred.toString()}");
+      }
+      UserCredential authResponse = await _auth.signInWithCredential(authCred);
+      if (authResponse.user != null) {
+        returnResult = "noError";
+      }
+
+      return returnResult;
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        print("vb bERRORROROR:${e.message}");
+      }
+      if (kDebugMode) {
+        print("vb bERRORROROR:${e.phoneNumber}");
+      }
+      return e.message.toString();
+    }
+  }
+
   Future<String> signIn(AuthCredential authCred) async {
     String returnResult = "error";
     try {
       UserCredential authRes = await _auth.signInWithCredential(authCred);
 
-      User? _user = authRes.user;
-      if (_user != null) {
+      User? user = authRes.user;
+      if (user != null) {
         returnResult = "noError";
       }
 
@@ -84,16 +110,16 @@ class FirebaseAuthService {
           FacebookAuthProvider.credential(loginResult.accessToken!.token);
       await _auth.signInWithCredential(facebookAuthCredential);
 
-      User _user = (_auth.currentUser)!;
+      User user = (_auth.currentUser)!;
 
-      FacebookLoginModel _facebookLoginModel = FacebookLoginModel(
-          email: _user.email,
-          firebaseId: _user.uid,
-          photoUrl: _user.photoURL.toString(),
+      FacebookLoginModel facebookLoginModel = FacebookLoginModel(
+          email: user.email,
+          firebaseId: user.uid,
+          photoUrl: user.photoURL.toString(),
           facebookLoginId: loginResult.accessToken!.userId.toString(),
-          displayName: _user.displayName.toString());
+          displayName: user.displayName.toString());
 
-      return BooleanResult.success(data: _facebookLoginModel);
+      return BooleanResult.success(data: facebookLoginModel);
     } catch (e) {
       return const BooleanResult.failure(error: "Some problem occurred");
     }
@@ -127,7 +153,7 @@ class FirebaseAuthService {
             }
           }
 
-          AppleLoginModel _appleLoginModel = AppleLoginModel(
+          AppleLoginModel appleLoginModel = AppleLoginModel(
               email: appleIdCredential.email,
               appleLoginId:
                   String.fromCharCodes(appleIdCredential.identityToken!),
@@ -135,7 +161,7 @@ class FirebaseAuthService {
               firebaseId: userCredential.user!.uid,
               photoUrl: null);
 
-          return BooleanResult.success(data: _appleLoginModel);
+          return BooleanResult.success(data: appleLoginModel);
         case AuthorizationStatus.error:
           // result.error ??
           return const BooleanResult.failure(error: "Some problem occurred");

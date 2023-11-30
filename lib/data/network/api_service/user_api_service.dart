@@ -1,9 +1,9 @@
-import 'package:baseproject/app/locator.dart';
-import 'package:baseproject/const/end_points_const.dart';
-import 'package:baseproject/models/user/user_create_model.dart';
-import 'package:baseproject/utils/api_utils/api_exception/api_exception.dart';
-import 'package:baseproject/utils/client.dart';
-import 'package:baseproject/utils/results/api_result/api_result.dart';
+import 'package:fajrApp/app/locator.dart';
+import 'package:fajrApp/const/end_points_const.dart';
+import 'package:fajrApp/models/user/user_create_model.dart';
+import 'package:fajrApp/utils/api_utils/api_exception/api_exception.dart';
+import 'package:fajrApp/utils/client.dart';
+import 'package:fajrApp/utils/results/api_result/api_result.dart';
 import 'package:dio/dio.dart';
 
 class UserApiService {

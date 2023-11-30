@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:baseproject/app/app.bottomsheets.dart';
-import 'package:baseproject/app/app.dialog.dart';
-import 'package:baseproject/app/app.snackbar.dart';
-import 'package:baseproject/app/routes/setup_routes.router.dart';
-import 'package:baseproject/const/app_const.dart';
-import 'package:baseproject/services/firebase_notification_service.dart';
-import 'package:baseproject/styles/styles.dart';
-import 'package:baseproject/utils/app_util.dart';
+import 'package:fajrApp/app/app.bottomsheets.dart';
+import 'package:fajrApp/app/app.dialog.dart';
+import 'package:fajrApp/app/app.snackbar.dart';
+import 'package:fajrApp/app/routes/setup_routes.router.dart';
+import 'package:fajrApp/const/app_const.dart';
+import 'package:fajrApp/firebase_options.dart';
+import 'package:fajrApp/services/firebase_notification_service.dart';
+import 'package:fajrApp/styles/styles.dart';
+import 'package:fajrApp/ui/screens/auth_screens/auth_view.dart';
+import 'package:fajrApp/utils/app_util.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -16,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sized_context/sized_context.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -30,8 +33,7 @@ void main() {
     WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-        .then((_) async {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) async {
       await Firebase.initializeApp();
 
       await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
@@ -61,8 +63,7 @@ void main() {
       setUpBototmSheet();
       setupDialogUi();
 
-      FirebaseNotificationService notificationService =
-          locator<FirebaseNotificationService>();
+      FirebaseNotificationService notificationService = locator<FirebaseNotificationService>();
       notificationService.initMessaging();
 
       FlutterNativeSplash.remove();
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static AppStyle _style = AppStyle();
+
   static AppStyle get style => _style;
 
   @override
@@ -100,22 +102,28 @@ class MyApp extends StatelessWidget {
 
     AppUtils().easyLoadingInit();
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: AppConst.appName,
-      navigatorKey: StackedService.navigatorKey,
-      builder: EasyLoading.init(
-        builder: (context, child) {
-          _style = AppStyle(screenSize: context.sizePx);
-          return child!;
-        },
-      ),
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      initialRoute: "/",
-      navigatorObservers: [
-        locator<FirebaseAnalyticsService>().getAnalyticsObserver(),
-      ],
-      theme: ThemeConfig().themeData,
+    return ScreenUtilInit(
+      designSize: const Size(414, 896),
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: AppConst.appName,
+          navigatorKey: StackedService.navigatorKey,
+          builder: EasyLoading.init(
+            builder: (context, child) {
+              _style = AppStyle(screenSize: context.sizePx);
+              return child!;
+            },
+          ),
+          onGenerateRoute: StackedRouter().onGenerateRoute,
+          initialRoute: "/",
+          navigatorObservers: [
+            locator<FirebaseAnalyticsService>().getAnalyticsObserver(),
+          ],
+          theme: ThemeConfig().themeData,
+          home: const AuthView(),
+        );
+      },
     );
   }
 }

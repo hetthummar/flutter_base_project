@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "911810977666",
-    "project_id": "test-project-89f9f",
-    "storage_bucket": "test-project-89f9f.appspot.com"
+    "project_number": "222948071834",
+    "project_id": "fajr-cb5f5",
+    "storage_bucket": "fajr-cb5f5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:911810977666:android:7ee9c30b066789763c399b",
+        "mobilesdk_app_id": "1:222948071834:android:6b6c62a7cf3114b2ae0223",
         "android_client_info": {
-          "package_name": "com.app.baseproject"
+          "package_name": "com.app.fajrapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "911810977666-cr4uq3tkd10uu9t1j071kr46t85nhfn4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBFu3Vq01XVtbCc-v6TqgSy_cNjZS3K56s"
+          "current_key": "AIzaSyBtggHciKx-RKQx3RXfT0Lz_wvEHyTOyuY"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "911810977666-cr4uq3tkd10uu9t1j071kr46t85nhfn4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

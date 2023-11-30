@@ -1,8 +1,11 @@
-import 'package:baseproject/ui/screens/auth_screens/auth_view.dart';
-import 'package:baseproject/ui/screens/login/login_view.dart';
-import 'package:baseproject/ui/screens/main_screen/main_screen_view.dart';
-import 'package:baseproject/ui/screens/signup/signup_view.dart';
-import 'package:baseproject/ui/screens/startup/startup_view.dart';
+import 'package:fajrApp/ui/screens/auth_screens/auth_view.dart';
+import 'package:fajrApp/ui/screens/main_screen/fragments/add_screen/add_video_view.dart';
+import 'package:fajrApp/ui/screens/main_screen/fragments/analytics_screen/analytics_view.dart';
+import 'package:fajrApp/ui/screens/main_screen/fragments/home_screen/home_view.dart';
+import 'package:fajrApp/ui/screens/main_screen/fragments/profile_screen/profile_view.dart';
+import 'package:fajrApp/ui/screens/main_screen/fragments/search_screen/search_view.dart';
+import 'package:fajrApp/ui/screens/main_screen/main_screen_view.dart';
+import 'package:fajrApp/ui/screens/startup/startup_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 @StackedApp(
@@ -10,8 +13,11 @@ import 'package:stacked/stacked_annotations.dart';
     MaterialRoute(page: StartUpView, initial: true),
     MaterialRoute(page: MainScreenView),
     MaterialRoute(page: AuthView),
-    MaterialRoute(page: LoginView),
-    MaterialRoute(page: SignUpView),
+    MaterialRoute(page: HomeView),
+    MaterialRoute(page: SearchView),
+    MaterialRoute(page: AddVideoView),
+    MaterialRoute(page: AnalyticsView),
+    MaterialRoute(page: ProfileView),
   ],
 )
 class AppSetup {}

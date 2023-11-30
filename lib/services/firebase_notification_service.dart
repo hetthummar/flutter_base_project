@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:baseproject/const/app_const.dart';
-import 'package:baseproject/utils/app_util.dart';
+import 'package:fajrApp/const/app_const.dart';
+import 'package:fajrApp/utils/app_util.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FirebaseNotificationService {

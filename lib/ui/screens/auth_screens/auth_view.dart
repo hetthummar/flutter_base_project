@@ -1,9 +1,8 @@
-import 'package:baseproject/main.dart';
-import 'package:baseproject/ui/widgets/app.button.dart';
+import 'package:fajrApp/ui/screens/auth_screens/auth_view_model.dart';
+import 'package:fajrApp/ui/screens/auth_screens/fragments/login_view.dart';
+import 'package:fajrApp/ui/screens/auth_screens/fragments/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
-import 'auth_view_model.dart';
 
 class AuthView extends StatelessWidget {
   const AuthView({Key? key}) : super(key: key);
@@ -16,33 +15,20 @@ class AuthView extends StatelessWidget {
       onViewModelReady: (viewModel) {},
       builder: (context, viewModel, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text("Auth"),
-          ),
-          body: SafeArea(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    viewModel.customBaseViewModel.showEasySuccess();
-                  },
-                  child: Text("LOGIN1212", style: $styles.text.btn),
-                ),
-                SizedBox(height: 12 * $styles.scale),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AppBtn(
-                    "Test BTN",
-                    onPressed: () {},
-                    scaleEffect: true,
-                    rippleEffect: true,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          body: getViewForIndex(index: viewModel.currentIndex),
         );
       },
     );
+  }
+}
+
+Widget getViewForIndex({required int index}) {
+  switch (index) {
+    case 0:
+      return const LoginView();
+    case 1:
+      return const OTPView();
+    default:
+      return const LoginView();
   }
 }

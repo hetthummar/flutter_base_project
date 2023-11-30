@@ -1,3 +1,4 @@
+import 'package:fajrApp/main.dart';
 import 'package:flutter/material.dart';
 
 class AppLoadingIndicator extends StatelessWidget {
@@ -8,13 +9,12 @@ class AppLoadingIndicator extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: const [
+      children: [
         SizedBox(
           height: 24,
           width: 24,
-          child:
-          CircularProgressIndicator(
-            color: Colors.white60,
+          child: CircularProgressIndicator(
+            color: $styles.colors.body,
             strokeWidth: 2.0,
           ),
         ),

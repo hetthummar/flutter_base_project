@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:baseproject/app/locator.dart';
-import 'package:baseproject/config/api_config.dart';
-import 'package:baseproject/services/firebase_auth_service.dart';
+import 'package:fajrApp/app/locator.dart';
+import 'package:fajrApp/config/api_config.dart';
+import 'package:fajrApp/services/firebase_auth_service.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';

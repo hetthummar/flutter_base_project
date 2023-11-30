@@ -1,4 +1,6 @@
-import 'package:baseproject/main.dart';
+// ignore_for_file: must_be_immutable
+
+import 'package:fajrApp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scale_tap/flutter_scale_tap.dart';
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CustomBackButton extends StatelessWidget {
-  Function callback;
-  CustomBackButton(this.callback);
+  final Function? callback;
+  const CustomBackButton(this.callback, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        callback();
+        callback!();
       },
       child: const Icon(
         Icons.arrow_back,

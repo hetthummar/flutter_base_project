@@ -1,23 +1,35 @@
-import 'package:baseproject/app/locator.dart';
-import 'package:baseproject/const/enums/bottom_sheet_enums.dart';
+import 'package:fajrApp/app/locator.dart';
+import 'package:fajrApp/const/enums/bottom_sheet_enums.dart';
+import 'package:fajrApp/main.dart';
+import 'package:fajrApp/ui/bottomsheets/auth_bottomsheet/auth_bottomsheet_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 void setUpBototmSheet() {
   final bottomSheetService = locator<BottomSheetService>();
   final builders = {
-    bottomSheetEnum.basic: (context, sheetRequest, completer) =>
-        _BasicDialog(request: sheetRequest, completer: completer),
-    bottomSheetEnum.error: (context, sheetRequest, completer) =>
-        _ErrorDilog(request: sheetRequest, completer: completer),
-    bottomSheetEnum.noInternet: (context, sheetRequest, completer) =>
-        _NoInternetDilog(request: sheetRequest, completer: completer),
+    BottomSheetEnum.basic: (context, sheetRequest, completer) => _BasicDialog(
+          request: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetEnum.error: (context, sheetRequest, completer) => _ErrorDilog(
+          request: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetEnum.noInternet: (context, sheetRequest, completer) => _NoInternetDilog(
+          request: sheetRequest,
+          completer: completer,
+        ),
+    BottomSheetEnum.auth: (context, sheetRequest, completer) => AuthBottomSheet(
+          request: sheetRequest,
+          completer: completer,
+        ),
   };
 
   bottomSheetService.setCustomSheetBuilders(builders);
 }
-
 
 class _BasicDialog extends StatelessWidget {
   final SheetRequest request;
@@ -27,10 +39,7 @@ class _BasicDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-        child: Container(
-      child: Text("Basic"),
-    ));
+    return const Dialog(child: Text("Basic"));
   }
 }
 
@@ -46,8 +55,8 @@ class _ErrorDilog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(25),
-      padding: EdgeInsets.all(25),
+      margin: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -63,18 +72,18 @@ class _ErrorDilog extends StatelessWidget {
               color: Colors.grey[900],
             ),
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           Text(
             request.description ?? "",
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
+            style: const TextStyle(color: Colors.grey),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           GestureDetector(
             onTap: () => completer(SheetResponse(confirmed: true)),
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
@@ -84,10 +93,7 @@ class _ErrorDilog extends StatelessWidget {
                 child: Center(
                     child: Text(
                   request.mainButtonTitle ?? "OK",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                  style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
                 )),
               ),
             ),
@@ -110,8 +116,8 @@ class _NoInternetDilog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(25),
-      padding: EdgeInsets.all(25),
+      margin: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
@@ -127,18 +133,20 @@ class _NoInternetDilog extends StatelessWidget {
               color: Colors.grey[900],
             ),
           ),
-          SizedBox(height: 4),
+          Gap($styles.insets.xs),
           Text(
             request.description ?? "",
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey),
+            style: $styles.text.labelMedium.copyWith(
+              color: $styles.colors.greyStrong,
+            ),
           ),
-          SizedBox(height: 20),
+          Gap($styles.insets.m),
           GestureDetector(
             onTap: () => completer(SheetResponse(confirmed: true)),
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.green,
                   borderRadius: BorderRadius.all(
                     Radius.circular(5),
@@ -148,10 +156,11 @@ class _NoInternetDilog extends StatelessWidget {
                 child: Center(
                   child: Text(
                     request.mainButtonTitle ?? "OK",
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
+                    style: $styles.text.labelLarge.copyWith(
+                      color: $styles.colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
@@ -159,6 +168,25 @@ class _NoInternetDilog extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class AuthBottomSheet extends StatelessWidget {
+  final SheetRequest request;
+  final Function(SheetResponse) completer;
+
+  const AuthBottomSheet({
+    super.key,
+    required this.request,
+    required this.completer,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AuthBottomSheetView(
+      completer: completer,
+      request: request,
     );
   }
 }

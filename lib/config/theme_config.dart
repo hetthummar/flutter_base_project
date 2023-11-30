@@ -1,4 +1,4 @@
-import 'package:baseproject/main.dart';
+import 'package:fajrApp/main.dart';
 import 'package:flutter/material.dart';
 
 class ThemeConfig {

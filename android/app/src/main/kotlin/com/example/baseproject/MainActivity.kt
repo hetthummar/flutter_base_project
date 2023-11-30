@@ -1,6 +1,6 @@
-package com.example.baseproject
+package com.app.fajrapp
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity: FlutterActivity() {
+class MainActivity: FlutterFragmentActivity() {
 }

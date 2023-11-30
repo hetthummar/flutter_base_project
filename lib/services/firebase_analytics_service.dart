@@ -1,5 +1,5 @@
-import 'package:baseproject/app/locator.dart';
-import 'package:baseproject/services/firebase_auth_service.dart';
+import 'package:fajrApp/app/locator.dart';
+import 'package:fajrApp/services/firebase_auth_service.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '../const/enums/login_method_enum.dart';

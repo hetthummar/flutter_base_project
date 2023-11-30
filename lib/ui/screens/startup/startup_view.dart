@@ -1,4 +1,4 @@
-import 'package:baseproject/ui/screens/startup/startup_view_model.dart';
+import 'package:fajrApp/ui/screens/startup/startup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 

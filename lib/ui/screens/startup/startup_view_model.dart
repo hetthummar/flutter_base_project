@@ -1,6 +1,6 @@
-import 'package:baseproject/app/routes/setup_routes.router.dart';
-import 'package:baseproject/base/custom_base_view_model.dart';
-import 'package:baseproject/models/user/user_create_model.dart';
+import 'package:fajrApp/app/routes/setup_routes.router.dart';
+import 'package:fajrApp/base/custom_base_view_model.dart';
+import 'package:fajrApp/models/user/user_create_model.dart';
 
 class StartUpViewModel extends CustomBaseViewModel {
   runStartupLogic() async {
@@ -12,7 +12,7 @@ class StartUpViewModel extends CustomBaseViewModel {
       getNavigationService().clearStackAndShow(Routes.mainScreenView);
     } else {
       await getAuthService().logOut();
-      getNavigationService().clearStackAndShow(Routes.authView);
+      getNavigationService().clearStackAndShow(Routes.mainScreenView);
     }
   }
 }

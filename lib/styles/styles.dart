@@ -1,4 +1,4 @@
-import 'package:baseproject/styles/colors.dart';
+import 'package:fajrApp/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 export 'colors.dart';

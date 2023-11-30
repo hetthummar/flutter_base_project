@@ -1,7 +1,7 @@
-import 'package:baseproject/app/locator.dart';
-import 'package:baseproject/config/color_config.dart';
-import 'package:baseproject/const/enums/dialogs_enum.dart';
-import 'package:baseproject/ui/widgets/app.button.dart';
+import 'package:fajrApp/app/locator.dart';
+import 'package:fajrApp/config/color_config.dart';
+import 'package:fajrApp/const/enums/dialogs_enum.dart';
+import 'package:fajrApp/ui/widgets/app.button.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked_services/stacked_services.dart';
